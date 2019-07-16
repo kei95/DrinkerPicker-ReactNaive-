@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, Picker, Button } from 'react-native'
 import Player from '../component/Player'
 import Result from '../component/Result'
+import GameEndScreen from '../screen/GameEndScreen';
 
 class PlayerScreen extends React.Component {
 
@@ -39,7 +40,6 @@ class PlayerScreen extends React.Component {
         } else {
             this.setState({ numOfPlayer: this.props.numOfplayer,remainedNumOfPlayer: 0, players: this.props.players})
         }
-        console.log(this.props.numOfplayer, this.props.players)
     }
 
     onChange(currentNum) {
@@ -81,7 +81,6 @@ class PlayerScreen extends React.Component {
     okBtnPressed() {
         if(this.props.isNotFirstTurn){
             this.setState({answer: this.props.answer, isFirstPlayer: false});
-            console.log(this.state.remainedNumOfPlayer, this.state.numOfPlayer)
             if (this.state.isLastPerson) {
                 this.winnerPicker();
                 this.setState({isResult: true});
@@ -104,7 +103,6 @@ class PlayerScreen extends React.Component {
     }
 
     addBtnPressed() {
-        console.log(this.state.remainedNumOfPlayer)
         if(this.props.isNotFirstTurn){
             player = this.state.players[this.state.remainedNumOfPlayer];
             player.setNum(this.state.selectedNum);
@@ -126,6 +124,15 @@ class PlayerScreen extends React.Component {
 
     render() {
         const nums = Array.from(Array(101).keys())
+        if(this.state.isResult && this.state.numOfPlayer === 1
+            ){
+            return(
+                <View style={styles.containerResult}>
+                    <GameEndScreen answer={this.state.answer} loser={this.state.players[0].name} winner={this.state.result.name} winnersNum={this.state.WinnersNum}/>
+                </View>
+            );
+        }
+
         if(this.state.isLastPerson && !this.state.isResult){
             return(
                 <View style={styles.containerInner}>

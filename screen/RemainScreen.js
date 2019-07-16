@@ -19,7 +19,7 @@ class RemainScreen extends React.Component {
         this.playResultSound();
         setTimeout(() => {
             this.setState({isTouchable: true})
-          }, 3000)
+        }, 3000)
     }
 
     async playResultSound() {
