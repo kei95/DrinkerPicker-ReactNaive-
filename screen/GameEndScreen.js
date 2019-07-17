@@ -1,12 +1,14 @@
 import React from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, Picker, Button } from 'react-native'
+import { Text, View, StyleSheet, TouchableWithoutFeedback, Image, TextInput, Picker, Button } from 'react-native'
 import FadeInView from '../component/Aminations/FadeInView'
+import CustomScreen from './CustomScreen';
 class GameEndScreen extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             winnerName: '',
-            isResult: false
+            isResult: false,
+            isGameDone: false
         }
     }
 
@@ -16,9 +18,23 @@ class GameEndScreen extends React.Component {
         }, 2500)
     }
 
+    pressedScreen() {
+        if(this.state.isResult){
+            this.setState({isGameDone: true})
+        }
+    }
+
     render() {
+        if(this.state.isGameDone){
+            return(
+                <View style={{flex: 1}}>
+                    <CustomScreen />
+                </View>
+            )
+        }
         return(
             <View style={styles.container}>
+                <TouchableWithoutFeedback onPress={() => this.pressedScreen()}>
                 <View style={styles.inner}>
                 <View style={styles.top}>
                     <Text style={styles.text}>Loser is...</Text>
@@ -30,6 +46,7 @@ class GameEndScreen extends React.Component {
                     </FadeInView> : null}
                     </View>
                 </View>
+                </TouchableWithoutFeedback>
             </View>
         );
     }

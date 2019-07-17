@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Image, TextInput, Picker, Button } from 'react-native'
+import { Asset, AppLoading} from 'expo'
 import Player from '../component/Player'
 import Result from '../component/Result'
 import GameEndScreen from '../screen/GameEndScreen';
@@ -23,7 +24,8 @@ class PlayerScreen extends React.Component {
             WinnersNum: 0,
             result: Object,
             isFirstPlayer: true,
-            isLastPerson: false
+            isLastPerson: false,
+            isAsyncReady: false
         }
         this.onChange = this.onChange.bind(this);
         this.addBtnPressed = this.addBtnPressed.bind(this);
@@ -122,8 +124,30 @@ class PlayerScreen extends React.Component {
     }
     }
 
+    async _cacheResourcesAsync() {
+        return Asset.loadAsync(
+            require('../Image/phoneIcon.png'),
+        )
+    }
+
     render() {
         const nums = Array.from(Array(101).keys())
+
+        if (!this.state.isAsyncReady) {
+            return (
+              <AppLoading
+                startAsync={() => this._cacheResourcesAsync()}
+                onFinish={() => this.setState({ isAsyncReady: true })}
+                onError={console.warn}
+              />
+            );
+          }
+      
+      
+
+
+
+
         if(this.state.isResult && this.state.numOfPlayer === 1
             ){
             return(
