@@ -2,7 +2,7 @@ import StartScreen from '../screen/StartScreen'
 import { createStackNavigator } from 'react-navigation'; 
 import CustomScreen from '../screen/CustomScreen'
 import PlayerScreen from '../screen/PlayerScreen'
-import GameEndScreen from '../screen/GameEndScreen'
+import ExplainScreen from '../screen/ExplainScreen';
 
 
 export default Navigator = createStackNavigator(
@@ -25,10 +25,10 @@ export default Navigator = createStackNavigator(
                 header: null
             }
         },
-        GameEndScreen: {
-            screen: GameEndScreen,
+        ExplainScreen: {
+            screen: ExplainScreen,
             navigationOptions: {
-                header: null
+                title: 'Rule',
             }
         }
     },

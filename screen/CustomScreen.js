@@ -7,23 +7,23 @@ class CustomScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      count: 1,
+      count: 2,
       numOfPlayer: 1,
       fadeIn: new Animated.Value(0),
-      moveToNext: false
+      moveToNext: false,
+      moveToRule: false
     }
   }
 
   componentDidUpdate() {
-  //   if (this.state.moveToNext){
-  //   this.props.navigation.navigate("PlayerScreen",{
-  //     playerNum: this.state.numOfPlayer
-  //   })
-  // }
+    console.log(this.props.navigation)
+    if (this.state.moveToRule){
+    this.props.navigation.navigate("ExplainScreen");
+  }
   }
 
   componentWillMount() {
-    this.setState({moveToNext: false})
+    this.setState({moveToNext: false, moveToRule: false})
   }
 
   componentDidMount() {
@@ -38,20 +38,28 @@ class CustomScreen extends React.Component {
     this.setState({ count: this.state.count + 1 })
     if(this.state.moveToNext){
       this.setState({moveToNext: false})
+    } else if(this.state.moveToRule) {
+      this.setState({moveToRule: false})
     }
   }
 
   decrementCount = () => {
-    if (this.state.count > 1) {
+    if (this.state.count > 2) {
       this.setState({ count: this.state.count - 1 })
     }
     if(this.state.moveToNext){
       this.setState({moveToNext: false})
+    }  else if(this.state.moveToRule) {
+      this.setState({moveToRule: false})
     }
   }
 
   pressedAddBtn = () =>  {
-    this.setState({numOfPlayer: this.state.count, moveToNext: true});
+    this.setState({numOfPlayer: this.state.count, moveToNext: true, moveToRule: false});
+  }
+
+  pressedRuleBtn = () => {
+    this.setState({moveToRule: true});
   }
 
   render() {
@@ -59,7 +67,7 @@ class CustomScreen extends React.Component {
     if(this.state.moveToNext){
       return(
         <View style={styles.container}>
-          <PlayerScreen playerNum={this.state.numOfPlayer}/>
+          <PlayerScreen navigation={this.props.navigation} playerNum={this.state.numOfPlayer}/>
         </View>
       );
     }
@@ -92,7 +100,13 @@ class CustomScreen extends React.Component {
               <Text style={styles.addBtn}>Add</Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity onPress={() => {this.pressedRuleBtn()}} >
+            <View style={styles.border}>
+              <Text style={styles.addBtn}>Rule</Text>
+            </View>
+          </TouchableOpacity>
         </View>
+      
       </View>
     )
   }

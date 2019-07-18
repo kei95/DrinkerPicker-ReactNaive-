@@ -1,26 +1,62 @@
 import React from 'react'
-import { Text, View, StyleSheet, TouchableWithoutFeedback, Image, TextInput, Picker, Button } from 'react-native'
+import { Text, View, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { Audio } from 'expo-av';
 import FadeInView from '../component/Aminations/FadeInView'
 import CustomScreen from './CustomScreen';
+import partyBlowers from '../component/Sounds/partyBlowers.wav';
+import partyBlowerBoomer from '../component/Sounds/partyBlowerBoomer.wav'
+
 class GameEndScreen extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             winnerName: '',
             isResult: false,
-            isGameDone: false
+            isBoomerDone: false,
+            isGameDone: false,
+            isSoundOn: false
         }
     }
 
     componentDidMount() {
         setTimeout(() => {
             this.setState({ isResult: true });
-        }, 2500)
+            setTimeout(() => {
+                this.playBoomer()
+            }, 500)
+        }, 3500)
+    }
+
+    async playBoomer() {
+        const { sound } = await Audio.Sound.createAsync(
+            partyBlowerBoomer,
+            {
+                shouldPlay: true,
+                isLooping: false,
+            },
+        );
+        this.setState({isSoundOn: true})
+        this.sound = sound;
+        this.playBlower()
+    }
+
+    async playBlower() {
+        const { sound } = await Audio.Sound.createAsync(
+            partyBlowers,
+            {
+                shouldPlay: true,
+                isLooping: false,
+            },
+        );
+        this.sound = sound;
     }
 
     pressedScreen() {
         if(this.state.isResult){
             this.setState({isGameDone: true})
+        }
+        if(this.state.isSoundOn){
+            this.sound.stopAsync();
         }
     }
 
@@ -28,7 +64,7 @@ class GameEndScreen extends React.Component {
         if(this.state.isGameDone){
             return(
                 <View style={{flex: 1}}>
-                    <CustomScreen />
+                    <CustomScreen navigation={this.props.navigation} />
                 </View>
             )
         }
@@ -55,7 +91,6 @@ class GameEndScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
     },
     inner: {
         flex: 1,

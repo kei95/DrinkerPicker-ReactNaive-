@@ -59,7 +59,7 @@ class RemainScreen extends React.Component {
         } else {
             return (
                 <View style={styles.nextWrapper}>
-                    <PlayerScreen answer={this.props.answer} initialPlayer={this.props.players[0].name} isNotFirstTurn={this.state.isNotFirstTurn} players={this.props.players} numOfplayer={this.props.playersLeft}/>
+                    <PlayerScreen navigation={this.props.navigation} answer={this.props.answer} initialPlayer={this.props.players[0].name} isNotFirstTurn={this.state.isNotFirstTurn} players={this.props.players} numOfplayer={this.props.playersLeft}/>
                 </View>);
         }
     }

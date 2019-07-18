@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } fr
 import { Audio } from 'expo-av';
 import ResultRoll from '../component/Sounds/ResultRoll.wav';
 import Crash from '../component/Sounds/Crash.wav';
-import RemainScreen from '../screen/RemainScreen';
+import RemainScreen from './RemainScreen';
 
 class Result extends React.Component {
 
@@ -41,7 +41,6 @@ class Result extends React.Component {
                 shouldPlay: true,
                 isLooping: false,
             },
-            this._updateScreenForSoundStatus,
         );
         this.sound = sound;
         this.setState({ isRollOn: true });
@@ -54,7 +53,6 @@ class Result extends React.Component {
                 shouldPlay: true,
                 isLooping: false,
             },
-            this._updateScreenForSoundStatus,
         );
         this.sound = sound;
         this.setState({ isCrashed: true });
@@ -74,12 +72,6 @@ class Result extends React.Component {
             this.sound.stopAsync();
             this.playCrash();
             this.setState({ isCrashed: true, isResult: true })
-        }
-    }
-
-    _updateScreenForSoundStatus = (status) => {
-        if (status.isPlaying && this.state.isRollOn == true) {
-            this.setState({ isRollOn: false })
         }
     }
 
@@ -113,7 +105,7 @@ class Result extends React.Component {
         if (this.state.RemainScreen) {
             return (
                 <View style={styles.containerRemain}>
-                    <RemainScreen answer={this.props.answer} players={this.props.players} playersLeft={this.props.playersLeft} />
+                    <RemainScreen navigation={this.props.navigation} answer={this.props.answer} players={this.props.players} playersLeft={this.props.playersLeft} />
                 </View>);
         }
         if (this.state.isFirstToched) {
