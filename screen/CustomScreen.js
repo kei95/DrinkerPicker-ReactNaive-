@@ -16,7 +16,6 @@ class CustomScreen extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.props.navigation)
     if (this.state.moveToRule){
     this.props.navigation.navigate("ExplainScreen");
   }

@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-import { Asset, AppLoading } from 'expo'
 
 class ExplainScreen extends React.Component {
     constructor(props){
@@ -14,15 +13,11 @@ class ExplainScreen extends React.Component {
     }
 
 
-    async _cacheResourcesAsync() {
-        return Asset.loadAsync(
-            require('../Image/chatting.png'),
-            require('../Image/phoneIcon.png')
-        )
-    }
 
     onRightPressed() {
-        this.setState({pressed: this.state.pressed + 1})
+        if(this.state.pressed < 7){
+            this.setState({pressed: this.state.pressed + 1})
+        }
     }
 
     onLeftPressed() {
@@ -35,13 +30,21 @@ class ExplainScreen extends React.Component {
         switch(this.state.pressed) {
             case 0:
                 return "Welcome to Drinker Picker!"
-                break;
             case 1:
-                return `In this page, you can get \n the idea of this game`
-                break;
+                return `In this page, you can get \nthe idea of this game`
             case 2:
                 return `First of all, this app only needs this phone itself`
-                break;
+            case 3:
+                return `And you will choose\nyour name and number\nfrom 0 to 100`
+            case 4: 
+                return `Then, this app tells you\nwho was the closest\nperson to the answer`
+            case 5:
+                return `Congrats, you can be\nout of the game!`
+            case 6:
+                return `This cycle goes on until\nlast person is decided`
+            case 7:
+                return `Then, It's time for "fun!"`
+            
         }
     }
 
@@ -53,21 +56,22 @@ class ExplainScreen extends React.Component {
                 return require('../Image/chatting.png')
             case 2:
                 return require('../Image/phoneIcon.png')
-        }
+            case 3:
+                return require('../Image/chatting.png')
+            case 4:
+                return require('../Image/phoneIcon.png')
+            case 5:
+                return require('../Image/happy.png')
+            case 6:
+                return require('../Image/chatting.png')
+            case 7:
+                return require('../Image/drinking.png')
+                }
     }
 
     render() {
-        // let pic = this.state.pressed <= 1  ? require('../Image/chatting.png') : require('../Image/phoneIcon.png')
 
-        if (!this.state.isAsyncReady) {
-            return (
-                <AppLoading
-                    startAsync={() => this._cacheResourcesAsync()}
-                    onFinish={() => this.setState({ isAsyncReady: true })}
-                    onError={console.warn}
-                />
-            );
-        }
+
 
         return(
         <View style={styles.container}>
@@ -85,7 +89,7 @@ class ExplainScreen extends React.Component {
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={()=> this.onRightPressed()}> 
-                            <Text style={styles.BtnText}>OK</Text>
+                            <Text style={styles.BtnText}></Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={()=> this.onRightPressed()}> 
@@ -148,7 +152,7 @@ const styles = StyleSheet.create({
             alignItems: 'center',
         },
         top: {
-            marginTop: 110,
+            marginTop: 90,
             marginBottom: 0,
             top: 0,
             position: 'absolute'
