@@ -1,5 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
+import { Asset, AppLoading } from 'expo'
+
 
 class ExplainScreen extends React.Component {
     constructor(props){
@@ -24,6 +26,15 @@ class ExplainScreen extends React.Component {
         if(this.state.pressed > 0){
             this.setState({pressed: this.state.pressed - 1})
         }
+    }
+
+    async _cacheResourcesAsync() {
+        console.log("cashed")
+        return Asset.loadAsync([
+        require('../Image/phoneIcon.png'),
+        require('../Image/chatting.png'),
+        require('../Image/happy.png'),
+        require ('../Image/drinking.png')]);
     }
 
     renderText(){
@@ -70,6 +81,15 @@ class ExplainScreen extends React.Component {
     }
 
     render() {
+        if (!this.state.isAsyncReady) {
+            return (
+                <AppLoading
+                    startAsync={() => this._cacheResourcesAsync()}
+                    onFinish={() => this.setState({ isAsyncReady: true })}
+                    onError={console.warn}
+                />
+            );
+        }
 
 
 

@@ -2,14 +2,12 @@ import React from 'react';
 import { Animated, StyleSheet, View, ImageBackground, Image } from 'react-native';
 import CustomScreen from '../screen/CustomScreen'
 import FadeOutView from '../component/Aminations/FadeOutView';
-import { Asset, AppLoading } from 'expo'
 
 class StartScreen extends React.Component {
   constructor(props){
     super(props)
     this.state={
       isReady: false,
-      isAsyncReady: false,
     }
     this.taggleState = this.taggleState.bind(this)
   }
@@ -24,26 +22,7 @@ class StartScreen extends React.Component {
       this.setState({isReady: true})
     }
 
-    async _cacheResourcesAsync() {
-      return Asset.loadAsync(
-          require('../Image/phoneIcon.png'),
-          require('../Image/chatting.png'),
-          require('../Image/happy.png'),
-          require ('../Image/drinking.png')
-      );
-  }
-
     render() {
-
-      if (!this.state.isAsyncReady) {
-        return (
-            <AppLoading
-                startAsync={() => this._cacheResourcesAsync()}
-                onFinish={() => this.setState({ isAsyncReady: true })}
-                onError={console.warn}
-            />
-        );
-    }
 
       if(this.state.isReady){
         return(

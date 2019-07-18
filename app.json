@@ -27,6 +27,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.Kei.DrinkPicker"
     },
-    "description": ""
+    "description": "",
+    "githubUrl": "https://github.com/kei95/DrinkerPicker-ReactNaive-"
   }
 }
