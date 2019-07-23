@@ -1,7 +1,7 @@
 import React from 'react';
 import { Animated, StyleSheet, View, ImageBackground, Image } from 'react-native';
 import CustomScreen from '../screen/CustomScreen'
-import FadeOutView from '../component/Aminations/FadeOutView';
+import FadeOut from '../component/Aminations/FadeOutForSplash'
 
 class StartScreen extends React.Component {
   constructor(props){
@@ -15,7 +15,7 @@ class StartScreen extends React.Component {
     componentDidMount() {                      
       setTimeout(() => {
         this.taggleState()
-      }, 3500)
+      }, 2000)
     }
 
     taggleState() {
@@ -31,9 +31,9 @@ class StartScreen extends React.Component {
         </View>);
       } else {
         return (
-          <FadeOutView style={styles.containerForImage}>
+          <FadeOut style={styles.containerForImage}>
             <Image source={require('../Image/BackImage.jpg')} style={styles.cover}/>
-          </FadeOutView>
+          </FadeOut>
           );
         }
     }
