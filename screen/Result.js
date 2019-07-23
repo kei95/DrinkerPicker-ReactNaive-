@@ -105,7 +105,7 @@ class Result extends React.Component {
         if (this.state.RemainScreen) {
             return (
                 <View style={styles.containerRemain}>
-                    <RemainScreen navigation={this.props.navigation} answer={this.props.answer} players={this.props.players} playersLeft={this.props.playersLeft} />
+                    <RemainScreen staticPlayers={this.props.staticPlayers} navigation={this.props.navigation} answer={this.props.answer} players={this.props.players} playersLeft={this.props.playersLeft} />
                 </View>);
         }
         if (this.state.isFirstToched) {

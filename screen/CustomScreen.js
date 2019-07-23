@@ -95,12 +95,12 @@ class CustomScreen extends React.Component {
 
         <View style={styles.lines}>
           <TouchableOpacity onPress={() => {this.pressedAddBtn()}} >
-            <View style={styles.border}>
+            <View style={styles.borderLeft}>
               <Text style={styles.addBtn}>Add</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {this.pressedRuleBtn()}} >
-            <View style={styles.border}>
+            <View style={styles.borderRight}>
               <Text style={styles.addBtn}>Rule</Text>
             </View>
           </TouchableOpacity>
@@ -161,11 +161,18 @@ const styles = StyleSheet.create({
   count: {
     fontSize: 30,
   },
-  border: {
+  borderLeft: {
+    marginRight: 10,
     borderWidth: 1,
     borderColor: "#008f68",
     borderRadius: 5
-  },
+},
+borderRight: {
+    marginLeft: 10,
+    borderWidth: 1,
+    borderColor: "#008f68",
+    borderRadius: 5
+},
   addBtn: {
   margin: 4,
   paddingHorizontal: 20,

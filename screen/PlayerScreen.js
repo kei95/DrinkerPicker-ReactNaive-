@@ -17,6 +17,7 @@ class PlayerScreen extends React.Component {
             isHanded: false,
             nameInput: '',
             players: [],
+            staticPlayers: [],
             selectedNum: 0,
             currentNum: 0,
             isResult: false,
@@ -36,11 +37,12 @@ class PlayerScreen extends React.Component {
 
     componentDidMount() {
         if (!this.props.isNotFirstTurn) {
-            // const { navigation } = this.props;
-            // const playerNum = navigation.getParam('playerNum', 'something')
             this.setState({ numOfPlayer: this.props.playerNum, remainedNumOfPlayer: this.props.playerNum })
-        } else {
-            this.setState({ numOfPlayer: this.props.numOfplayer, remainedNumOfPlayer: 0, players: this.props.players })
+        } else if(this.props.isAfterGame){
+            this.setState({ players: this.props.staticPlayers, numOfPlayer: this.props.staticPlayers.length, remainedNumOfPlayer: 0, staticPlayers: this.props.staticPlayers})
+        }
+        else {
+            this.setState({ staticPlayers: this.props.staticPlayers, numOfPlayer: this.props.numOfplayer, remainedNumOfPlayer: 0, players: this.props.players })
         }
     }
 
@@ -120,11 +122,11 @@ class PlayerScreen extends React.Component {
             if (this.state.remainedNumOfPlayer > 1) {
                 player = new Player(this.state.nameInput, this.state.selectedNum, 0)
                 this.state.players.push(player)
-                this.setState({ currentNum: 0, selectedNum: 0, isHanded: false, nameInput: '', remainedNumOfPlayer: this.state.remainedNumOfPlayer - 1 })
+                this.setState({ staticPlayers: this.state.players, currentNum: 0, selectedNum: 0, isHanded: false, nameInput: '', remainedNumOfPlayer: this.state.remainedNumOfPlayer - 1 })
             } else {
                 player = new Player(this.state.nameInput, this.state.selectedNum, 0)
                 this.state.players.push(player)
-                this.setState({ isLastPerson: true, currentNum: 0, selectedNum: 0, isHanded: false, nameInput: '', remainedNumOfPlayer: this.state.remainedNumOfPlayer - 1 })
+                this.setState({ staticPlayers: this.state.players, isLastPerson: true, currentNum: 0, selectedNum: 0, isHanded: false, nameInput: '', remainedNumOfPlayer: this.state.remainedNumOfPlayer - 1 })
             }
         }
     }
@@ -158,7 +160,7 @@ class PlayerScreen extends React.Component {
         ) {
             return (
                 <View style={styles.containerResult}>
-                    <GameEndScreen navigation={this.props.navigation} answer={this.state.answer} loser={this.state.players[0].name} winner={this.state.result.name} winnersNum={this.state.WinnersNum} />
+                    <GameEndScreen staticPlayers={this.state.staticPlayers} navigation={this.props.navigation} answer={this.state.answer} loser={this.state.players[0].name} winner={this.state.result.name} winnersNum={this.state.WinnersNum} />
                 </View>
             );
         }
@@ -181,7 +183,7 @@ class PlayerScreen extends React.Component {
         if (this.props.isNotFirstTurn && this.state.isResult) {
             return (
                 <View style={styles.containerResult}>
-                    <Result navigation={this.props.navigation} answer={this.state.answer} players={this.state.players} playersLeft={this.state.numOfPlayer} winner={this.state.result} gap={this.state.WinnersGap} winnersNum={this.state.WinnersNum} />
+                    <Result staticPlayers={this.state.staticPlayers} navigation={this.props.navigation} answer={this.state.answer} players={this.state.players} playersLeft={this.state.numOfPlayer} winner={this.state.result} gap={this.state.WinnersGap} winnersNum={this.state.WinnersNum} />
                 </View>);
         } else if (this.props.isNotFirstTurn) {
             return (
@@ -279,7 +281,7 @@ class PlayerScreen extends React.Component {
         } else {
             return (
                 <View style={styles.containerResult}>
-                    <Result navigation={this.props.navigation} answer={this.state.answer} players={this.state.players} playersLeft={this.state.numOfPlayer} winner={this.state.result} gap={this.state.WinnersGap} winnersNum={this.state.WinnersNum} />
+                    <Result staticPlayers={this.state.staticPlayers} navigation={this.props.navigation} answer={this.state.answer} players={this.state.players} playersLeft={this.state.numOfPlayer} winner={this.state.result} gap={this.state.WinnersGap} winnersNum={this.state.WinnersNum} />
                 </View>);
         }
     }
